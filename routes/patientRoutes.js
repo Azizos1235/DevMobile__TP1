@@ -72,5 +72,17 @@ router.delete("/:id", async (req, res) => {
   } catch (err) { handleError(res, err); } 
 }); 
 
+router.put("/:id", async (req, res) => {
+  try {
+    const patient = await Patient.findByIdAndUpdate(req.params.id, req.body,
+      { returnDocument: "after", runValidators: true });
+    if (!patient) return res.status(404).json({ message: "Patient introuvable" });
+    res.json(patient);
+  } catch (err) { handleError(res, err); }
+});
+
+
+
+
 // Toujours terminer le fichier par cette ligne
 module.exports = router;
